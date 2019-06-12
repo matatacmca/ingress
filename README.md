@@ -10,6 +10,8 @@ A collection of tools for the game Ingress
 
 - an Ingress account
 
+- The [Ingress Intel Cookie Monster extension for Google Chrome]()
+
 ## Installation
 
 1. Clone this Repository to a folder in your webserver using the below command
