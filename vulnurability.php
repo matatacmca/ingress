@@ -2,64 +2,6 @@
 	<head>
 		<title>Ingress Portal Vulnurability</title>
 		<link rel="icon" href="https://intel.ingress.com/favicon.ico" type="image/x-icon"/>
-		<script>
-			tileKeys = [
-				"15_18500_18406_0_8_100",
-				"15_18500_18407_0_8_100",
-				"15_18500_18408_0_8_100",
-				"15_18500_18409_0_8_100",
-				"15_18500_18410_0_8_100",
-				"15_18500_18411_0_8_100",
-				"15_18500_18412_0_8_100",
-				"15_18500_18413_0_8_100",
-				"15_18500_18414_0_8_100",
-				"15_18501_18403_0_8_100",
-				"15_18501_18404_0_8_100",
-				"15_18501_18405_0_8_100",
-				"15_18501_18406_0_8_100",
-				"15_18501_18407_0_8_100",
-				"15_18501_18408_0_8_100",
-				"15_18501_18409_0_8_100",
-				"15_18501_18410_0_8_100",
-				"15_18501_18410_0_8_100",
-				"15_18501_18411_0_8_100",
-				"15_18501_18412_0_8_100",
-				"15_18501_18413_0_8_100",
-				"15_18501_18414_0_8_100",
-				"15_18502_18402_0_8_100",
-				"15_18502_18403_0_8_100",
-				"15_18502_18404_0_8_100",
-				"15_18502_18405_0_8_100",
-				"15_18503_18402_0_8_100",
-				"15_18503_18403_0_8_100",
-				"15_18503_18404_0_8_100",
-				"15_18503_18405_0_8_100",
-				"15_18504_18402_0_8_100",
-				"15_18504_18403_0_8_100",
-				"15_18504_18404_0_8_100",
-				"15_18504_18405_0_8_100",
-				"15_18505_18402_0_8_100",
-				"15_18505_18403_0_8_100",
-				"15_18505_18404_0_8_100",
-				"15_18505_18405_0_8_100",
-				"15_18506_18402_0_8_100",
-				"15_18506_18403_0_8_100",
-				"15_18506_18404_0_8_100",
-				"15_18506_18405_0_8_100",
-				"15_18507_18403_0_8_100",
-				"15_18507_18404_0_8_100",
-				"15_18507_18406_0_8_100",
-				"15_18507_18407_0_8_100",
-				"15_18507_18408_0_8_100",
-				"15_18507_18409_0_8_100",
-				"15_18507_18410_0_8_100",
-				"15_18507_18410_0_8_100",
-				"15_18507_18411_0_8_100",
-				"15_18507_18412_0_8_100",
-				"15_18507_18413_0_8_100",
-				"15_18507_18414_0_8_100"
-				];
-		</script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -77,95 +19,78 @@
 			}
 		</style>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		
+	</head>
+	<body>
+		<div class="container-fluid text-center">
+			<label for="faction">SELECT YOUR FACTION</label>
+			<select id="faction" class="form-control" onchange="updateData();" id="faction">
+				<option selected>Enlightened</option>
+				<option>Resistance</option>
+			</select><br>
+		</div>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="panel panel-default" style="height:80vh; max-height:80vh;">
+						<div class="panel-heading text-center">Neutral Portals</div>
+						<div class="panel-body" style="overflow-y:auto; max-height:90%;" id="neutralPortals"></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="panel panel-default" style="height:80vh; max-height:80vh;">
+						<div class="panel-heading text-center">Vulnurable Portals</div>
+						<div class="panel-body" style="overflow-y:auto; max-height:90%;" id="vulnurablePortals"></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="panel panel-default" style="height:80vh; max-height:80vh;">
+						<div class="panel-heading text-center">Enemy Portals</div>
+						<div class="panel-body" style="overflow-y:auto; max-height:90%;" id="enemyPortals"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid text-center">
+			<button id="updateButton" class="btn btn-success" onclick="runUpdate()">Last Update was <span id="lastUpdate"></span> ago. Click to run Update Now</button>
+		</div>
 		<script>
-			getData();
-			setInterval(function(){getData();},60000);
-			function getData(){
-				for(var i in tileKeys)
-				{
-					var currentTileKey = tileKeys[i];
-					var settings = {
-						"async": true,
-						"crossDomain": true,
-						"url": `getData.php?tilekey=${currentTileKey}`,
-						"method": "GET",
-						"headers": {
-							"upgrade-insecure-requests": "1",
-							"accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-							"cache-control": "no-cache",
-							"postman-token": "dd9111ef-8254-09b5-6018-c8775d3c5288"
-							},
-						"dataType": "json"
-					};
-					
-					$.ajax(settings).done(function (response) {
-						updateInfo(response);
-					});
-				}
-			}
-			function updateInfo(response)
-			{
-				if(response.response !== undefined)
-				{
-					for(var faction in response.response)
-					{
-						var factionPortals = response.response[faction];
-						for(var portalID in factionPortals)
-						{
-							var currentPortal = factionPortals[portalID];
-							if(faction == "enlightened")//Worry about health
-							{
-								if(parseFloat(currentPortal.health) <= 50)//portal has low health
-								{
-									var portalDOM = document.getElementById(`portal_${portalID}`)
-									if(portalDOM !== null)
-									{
-										portalDOM.parentElement.removeChild(portalDOM);
-									}
-									var portalDOM = document.createElement('div');
-									portalDOM.classList.add('well','well-sm');
-									portalDOM.setAttribute('id',`portal_${portalID}`);
-									portalDOM.innerHTML = `<strong>${currentPortal.name} (L${currentPortal.level})</strong> ${currentPortal.health}% <a target="_blank" href="https://intel.ingress.com/intel?z=15&pll=${latlong(currentPortal.lat,currentPortal.long)}">`
-									document.getElementById("vulnurablePortals").appendChild(portalDOM);
-								}
-								else //ensure that portal is removed
-								{
-									var portalDOM = document.getElementById(`portal_${portalID}`)
-									if(portalDOM !== null)
-									{
-										portalDOM.parentElement.removeChild(portalDOM);
-									}
-								}
-							}
-							else if(faction == "resistance")
-							{
-								var portalDOM = document.getElementById(`portal_${portalID}`)
-								if(portalDOM !== null)
-								{
-									portalDOM.parentElement.removeChild(portalDOM);
-								}
-								var portalDOM = document.createElement('div');
-								portalDOM.classList.add('well','well-sm');
-								portalDOM.setAttribute('id',`portal_${portalID}`);
-								portalDOM.innerHTML = `<strong>${currentPortal.name} (L${currentPortal.level})</strong> ${currentPortal.health}% <a target="_blank" href="https://intel.ingress.com/intel?z=15&pll=${latlong(currentPortal.lat,currentPortal.long)}">`
-								document.getElementById("enemyPortals").appendChild(portalDOM);
-							}
-							else if(faction == "neutral")
-							{
-								var portalDOM = document.getElementById(`portal_${portalID}`)
-								if(portalDOM !== null)
-								{
-									portalDOM.parentElement.removeChild(portalDOM);
-								}
-								var portalDOM = document.createElement('div');
-								portalDOM.classList.add('well','well-sm');
-								portalDOM.setAttribute('id',`portal_${portalID}`);
-								portalDOM.innerHTML = `<strong>${currentPortal.name} (L${currentPortal.level})</strong> ${currentPortal.health}% <a target="_blank" href="https://intel.ingress.com/intel?z=15&pll=${latlong(currentPortal.lat,currentPortal.long)}">`
-								document.getElementById("neutralPortals").appendChild(portalDOM);
+			updateData();
+			function updateData(){
+				var lastUpdate = 0;
+				var playerFaction = document.getElementById('faction').value;
+				$.getJSON("data.json",function(data){
+					var portals = data.portals;
+					for(var portalID in portals){
+						var currentPortal = portals[portalID];
+						var now = (new Date().getTime())/1000;
+						var difference = now - currentPortal.timestamp;
+						if(difference > lastUpdate){
+							lastUpdate = difference;
+						}
+						var portalElement = document.getElementById(`portal_${portalID}`);
+						if(portalElement !== null){
+							portalElement.parentElement.removeChild(portalElement);
+						}
+						portalElement = document.createElement("div");
+						portalElement.setAttribute("id",`portal_${portalID}`);
+						portalElement.innerHTML = `<strong>${currentPortal.name} (L${currentPortal.level})</strong> ${currentPortal.health}% (${elapsedTime(difference)} ago) <a target="_blank" href="https://intel.ingress.com/intel?z=15&pll=${latlong(currentPortal.lat,currentPortal.long)}">`;
+						portalElement.classList.add('well','well-sm');
+						if(currentPortal.owner == "Neutral"){
+							document.getElementById('neutralPortals').appendChild(portalElement);
+						}
+						else if(currentPortal.owner == playerFaction){
+							if(currentPortal.health <= 50){
+								document.getElementById('vulnurablePortals').appendChild(portalElement);
 							}
 						}
+						else{
+							document.getElementById('enemyPortals').appendChild(portalElement);
+						}
 					}
-				}
+					document.getElementById('lastUpdate').innerText = elapsedTime(lastUpdate);
+				});
+				
 			}
 			function latlong(lat,long)
 			{
@@ -187,32 +112,48 @@
 				}
 				return `${latNew},${longNew}`
 			}
+			function elapsedTime(difference){
+				difference = difference/60;
+				var days = Math.floor(difference / (60*24));
+				var hours = Math.floor((difference - (days*60*24))/(60));
+				var minutes = Math.floor((difference - (days*60*24) - (hours * 60)));
+				return `${days}d${hours}h${minutes}m`;
+			}
+			function runUpdate(){
+				var updateButton = document.getElementById('updateButton');
+				updateButton.setAttribute('disabled',true);
+				updateButton.classList.add('btn-disabled');
+				updateButton.classList.remove('btn-success');
+				updateButton.innerHTML = `UPDATING, PLEAS WAIT!!! <span id="updateProgress"></span>`;
+				var previousData;
+				var oReq = new XMLHttpRequest();
+				oReq.onreadystatechange = function(){
+					if (this.readyState == 4 && this.status == 200){
+						updateButton.removeAttribute('disabled');
+						updateButton.classList.remove('btn-disabled');
+						updateButton.classList.add('btn-success');
+						updateButton.innerHTML = `Last Update was <span id="lastUpdate"></span> ago. Click to run Update Now`;
+						updateData();
+					}
+					if (this.readyState > 2){
+						var partialResponse = this.responseText;
+						if(previousData !== undefined){
+							partialResponse = partialResponse.replace(previousData, "");
+							previousData += partialResponse;
+						}
+						else
+						{
+							previousData = partialResponse;
+						}
+						if(document.getElementById('updateProgress') !== null){
+							document.getElementById('updateProgress').innerText = partialResponse;
+						}
+					}
+				}
+				oReq.open("get", "update.php", true);
+				oReq.send();
+			}
 		</script>
-		
-	</head>
-	<body>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-4">
-					<div class="panel panel-default" style="height:100vh; max-height:100vh;">
-						<div class="panel-heading text-center">Neutral Portals</div>
-						<div class="panel-body" style="overflow-y:auto; max-height:90%;" id="neutralPortals"></div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="panel panel-default" style="height:100vh; max-height:100vh;">
-						<div class="panel-heading text-center">Vulnurable Portals</div>
-						<div class="panel-body" style="overflow-y:auto; max-height:90%;" id="vulnurablePortals"></div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="panel panel-default" style="height:100vh; max-height:100vh;">
-						<div class="panel-heading text-center">Enemy Portals</div>
-						<div class="panel-body" style="overflow-y:auto; max-height:90%;" id="enemyPortals"></div>
-					</div>
-				</div>
-			</div>
-		</div>
 	</body>
 </html>
 <?php

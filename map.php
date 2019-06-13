@@ -1,8 +1,14 @@
 <?php
+	error_reporting(!E_ALL);
+	if(!file_exists("accountDetails.json")){
+		fclose(fopen("accountDetails.json",'x'));
+	}
+	if(!file_exists("data.json")){
+		fclose(fopen("data.json",'x'));
+	}
 	$data = json_decode(file_get_contents('data.json'),true);
 	$config = json_decode(file_get_contents("accountDetails.json"),true);
 	$mapsKey = $config["mapsAPIKey"];
-	error_reporting(!E_ALL);
 ?>
 <html>
 	<head>

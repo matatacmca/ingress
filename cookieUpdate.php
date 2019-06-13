@@ -1,5 +1,11 @@
 <?php
 	error_reporting(!E_ALL);
+	if(!file_exists("accountDetails.json")){
+		fclose(fopen("accountDetails.json",'x'));
+	}
+	if(!file_exists("data.json")){
+			fclose(fopen("data.json",'x'));
+		}
 	$accountDetails=json_decode(file_get_contents("accountDetails.json"),true);
 	$autoUpdateSecret = $accountDetails["autoUpdateSecret"];
 	if(!is_null($_POST["function"])){

@@ -1,4 +1,10 @@
-<pre><?php
+<pre><?
+	if(!file_exists("accountDetails.json")){
+		fclose(fopen("accountDetails.json",'x'));
+	}
+	if(!file_exists("data.json")){
+		fclose(fopen("data.json",'x'));
+	}
 	//$min = "15_18432_18370_0_8_100";
 	//$max = "15_18552_18465_0_8_100";
 	$mina = 18432;
