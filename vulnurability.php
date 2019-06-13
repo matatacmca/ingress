@@ -33,19 +33,19 @@
 			<div class="row">
 				<div class="col-md-4">
 					<div class="panel panel-default" style="height:80vh; max-height:80vh;">
-						<div class="panel-heading text-center">Neutral Portals</div>
+						<div class="panel-heading text-center">Neutral Portals (<span id="neutralCount"></span>)</div>
 						<div class="panel-body" style="overflow-y:auto; max-height:90%;" id="neutralPortals"></div>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="panel panel-default" style="height:80vh; max-height:80vh;">
-						<div class="panel-heading text-center">Vulnurable Portals</div>
+						<div class="panel-heading text-center">Vulnurable Portals (<span id="vulnurableCount"></span>)</div>
 						<div class="panel-body" style="overflow-y:auto; max-height:90%;" id="vulnurablePortals"></div>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="panel panel-default" style="height:80vh; max-height:80vh;">
-						<div class="panel-heading text-center">Enemy Portals</div>
+						<div class="panel-heading text-center">Enemy Portals (<span id="enemyCount"></span>)</div>
 						<div class="panel-body" style="overflow-y:auto; max-height:90%;" id="enemyPortals"></div>
 					</div>
 				</div>
@@ -58,6 +58,9 @@
 			updateData();
 			function updateData(){
 				var lastUpdate = 0;
+				var neutralCount = 0;
+				var vulnurableCount = 0;
+				var enemyCount = 0;
 				var playerFaction = document.getElementById('faction').value;
 				$.getJSON("data.json",function(data){
 					var portals = data.portals;
@@ -78,17 +81,23 @@
 						portalElement.classList.add('well','well-sm');
 						if(currentPortal.owner == "Neutral"){
 							document.getElementById('neutralPortals').appendChild(portalElement);
+							neutralCount += 1;
 						}
 						else if(currentPortal.owner == playerFaction){
 							if(currentPortal.health <= 50){
 								document.getElementById('vulnurablePortals').appendChild(portalElement);
+								vulnurableCount += 1;
 							}
 						}
 						else{
 							document.getElementById('enemyPortals').appendChild(portalElement);
+							enemyCount += 1;
 						}
 					}
 					document.getElementById('lastUpdate').innerText = elapsedTime(lastUpdate);
+					document.getElementById('neutralCount').innerText = neutralCount;
+					document.getElementById('vulnurableCount').innerText = vulnurableCount;
+					document.getElementById('enemyCount').innerText = enemyCount;
 				});
 				
 			}
@@ -124,7 +133,7 @@
 				updateButton.setAttribute('disabled',true);
 				updateButton.classList.add('btn-disabled');
 				updateButton.classList.remove('btn-success');
-				updateButton.innerHTML = `UPDATING, PLEAS WAIT!!! <span id="updateProgress"></span>`;
+				updateButton.innerHTML = `UPDATING, PLEASE WAIT!!! <span id="updateProgress"></span>`;
 				var previousData;
 				var oReq = new XMLHttpRequest();
 				oReq.onreadystatechange = function(){

@@ -61,12 +61,12 @@
 					$portals[$portalID] = $currentPortal; 
 				}
 			}
+			$data["portals"] = $portals;
+			file_put_contents('data.json',json_encode($data));
 		}
 		$retrievedTilekeys += 1;
 		say("Progress: $retrievedTilekeys / $totalTilekeys (" . $retrievedTilekeys/$totalTilekeys*100 ."%)<br>\r\n");
 	}
-	$data["portals"] = $portals;
-	file_put_contents('data.json',json_encode($data));
 	
 	
 	function requestEntities($tilekey)
