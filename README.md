@@ -59,7 +59,7 @@ A collection of tools for the game Ingress
     
     2.2.2 Save the file as 'accountDetails.json'
     
-    2.2.3 Install the [Ingress Intel Cookie Monster extension for Google Chrome (Extension is still Pending Review)]()
+    2.2.3 Install the [Ingress Intel Cookie Monster extension for Google Chrome](https://chrome.google.com/webstore/detail/ingress-intel-cookie-mons/hhnbgdhklbkmplfikhhlbndgjnhliell)
     
     2.2.4 Click on the extension icon
     
