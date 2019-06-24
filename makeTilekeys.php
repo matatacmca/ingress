@@ -1,4 +1,4 @@
-<pre><?
+<pre><?php
 	if(!file_exists("accountDetails.json")){
 		fclose(fopen("accountDetails.json",'x'));
 	}

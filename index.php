@@ -61,5 +61,80 @@
 				</ul>
 			</li>
 		</ul>
+		<h2>Options</h2>
+		<ul>
+			<li onclick="resetTileKeys();"><a href="#">Reset TileKeys</a></li>
+			<li onclick="resetPortalData();"><a href="#">Reset Portal Data</a></li>
+		</ul>
+		<script>
+			function resetTileKeys(){
+				var xhr = new XMLHttpRequest;
+				var data = new FormData();
+				data.append("reset","tileKeys");
+				
+				xhr.responseType = "json";
+				xhr.addEventListener("readystatechange", function () {
+					if(this.readyState === 4) {
+						if(this.response !== null){
+							if(typeof(this.response) !== "object"){
+							}
+							else{
+								if(this.response.success){
+									window.alert("Tile Keys Reset Successfully!!!")
+								}
+								else{
+									window.alert(this.response.error);
+								}
+							}
+						}
+						else{
+							if(xhr.status == 404){
+							}
+							else if(xhr.status == 403){
+							}
+							else{
+							}
+						}
+					}
+				});
+				xhr.open("POST", `reset.php`);
+				xhr.setRequestHeader("cache-control", "no-cache");
+				xhr.send(data);
+			}
+			function resetPortalData(){
+				var xhr = new XMLHttpRequest;
+				var data = new FormData();
+				data.append("reset","portalData");
+				
+				xhr.responseType = "json";
+				xhr.addEventListener("readystatechange", function () {
+					if(this.readyState === 4) {
+						if(this.response !== null){
+							if(typeof(this.response) !== "object"){
+							}
+							else{
+								if(this.response.success){
+									window.alert("Portal Data Reset Successfully!!!")
+								}
+								else{
+									window.alert(this.response.error);
+								}
+							}
+						}
+						else{
+							if(xhr.status == 404){
+							}
+							else if(xhr.status == 403){
+							}
+							else{
+							}
+						}
+					}
+				});
+				xhr.open("POST", `reset.php`);
+				xhr.setRequestHeader("cache-control", "no-cache");
+				xhr.send(data);
+			}
+		</script>
 	</body>
 </html>
