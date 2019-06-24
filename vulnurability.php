@@ -62,7 +62,7 @@
 				var vulnurableCount = 0;
 				var enemyCount = 0;
 				var playerFaction = document.getElementById('faction').value;
-				$.getJSON("data.json",function(data){
+				$.getJSON(`data.json?_=${new Date().getTime()}`,function(data){
 					var portals = data.portals;
 					for(var portalID in portals){
 						var currentPortal = portals[portalID];
